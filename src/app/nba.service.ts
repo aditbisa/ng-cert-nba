@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { format, subDays } from 'date-fns';
 
 import { Game, Stats, Team } from './data.models';
@@ -14,6 +14,7 @@ export class NbaService {
     'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
   };
   private API_URL = 'https://free-nba.p.rapidapi.com';
+  allTeams: Team[] = [];
   trackedTeams: Team[] = [];
 
   constructor(private http: HttpClient) {}
@@ -32,11 +33,18 @@ export class NbaService {
   }
 
   getAllTeams(): Observable<Team[]> {
-    return this.http
-      .get<{ data: Team[] }>(`${this.API_URL}/teams?page=0`, {
-        headers: this.headers,
-      })
-      .pipe(map((res) => res.data));
+    if (this.allTeams.length) {
+      return of(this.allTeams);
+    } else {
+      return this.http
+        .get<{ data: Team[] }>(`${this.API_URL}/teams?page=0`, {
+          headers: this.headers,
+        })
+        .pipe(
+          map((res) => res.data),
+          tap((data) => (this.allTeams = data))
+        );
+    }
   }
 
   getLastResults(team: Team, numberOfDays = 12): Observable<Game[]> {
