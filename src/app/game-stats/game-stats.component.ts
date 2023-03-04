@@ -12,11 +12,23 @@ import { NbaService } from '../nba.service';
 export class GameStatsComponent {
   teams$: Observable<Team[]>;
   allTeams: Team[] = [];
+  allConferences: string[] = [];
+  allDivisions: string[] = [];
 
   constructor(protected nbaService: NbaService) {
-    this.teams$ = nbaService
-      .getAllTeams()
-      .pipe(tap((data) => (this.allTeams = data)));
+    this.teams$ = nbaService.getAllTeams().pipe(
+      tap((data) => {
+        this.allTeams = data;
+        this.allConferences = data
+          .map((team) => team.conference)
+          .filter((v, i, a) => a.indexOf(v) === i);
+        this.allDivisions = data
+          .map((team) => team.division)
+          .filter((v, i, a) => a.indexOf(v) === i);
+        console.log(this.allConferences);
+        console.log(this.allDivisions);
+      })
+    );
   }
 
   trackTeam(teamId: string): void {
