@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-11">
     <select [(ngModel)]="conference" (change)="filterByConference()">
-      <option value="" selected disabled>
+      <option value="" selected>
         {{ loading ? "Loading..." : "Filter by Conference" }}
       </option>
       <option [value]="c" *ngFor="let c of allConferences">
@@ -9,7 +9,7 @@
       </option>
     </select>
     <select [(ngModel)]="division" (change)="filterByDivision()">
-      <option value="" selected disabled>
+      <option value="" selected>
         {{ loading ? "Loading..." : "Filter by Division" }}
       </option>
       <option [value]="d" *ngFor="let d of filteredDivisions">
@@ -17,9 +17,6 @@
       </option>
     </select>
     <select #teamSelect>
-      <option value="" selected disabled>
-        {{ loading ? "Loading..." : "Select Team" }}
-      </option>
       <option [value]="team.id" *ngFor="let team of filteredTeams">
         {{ team.full_name }}
       </option>

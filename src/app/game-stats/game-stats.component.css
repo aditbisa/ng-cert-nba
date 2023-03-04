@@ -1,0 +1,12 @@
+select[ng-reflect-model=""],
+option[value=""] {
+  font-style: italic;
+  color: #666;
+  background-color: #f0f0f0;
+}
+
+select[ng-reflect-model=""] option:not([value=""]) {
+  font-style: initial;
+  color: initial;
+  background-color: #ffffff;
+}
