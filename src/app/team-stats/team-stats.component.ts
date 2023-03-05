@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { mergeMap, Observable, ReplaySubject, startWith, tap } from 'rxjs';
 
 import { Game, Stats, Team } from '../data.models';
 import { NbaService } from '../nba.service';
@@ -15,19 +15,27 @@ export class TeamStatsComponent implements OnInit {
   team!: Team;
 
   games$!: Observable<Game[]>;
-  stats!: Stats;
+  stats: Stats = {} as Stats;
+
+  nbOfDaysSubject = new ReplaySubject<number>(1);
 
   constructor(protected nbaService: NbaService, private modal: ModalService) {}
 
   ngOnInit(): void {
-    this.games$ = this.nbaService
-      .getLastResults(this.team, 12)
-      .pipe(
-        tap(
-          (games) =>
-            (this.stats = this.nbaService.getStatsFromGames(games, this.team))
-        )
-      );
+    this.games$ = this.nbOfDaysSubject.asObservable().pipe(
+      mergeMap((nbOfDays) => {
+        return this.nbaService.getLastResults(this.team, nbOfDays);
+      }),
+      tap(
+        (games) =>
+          (this.stats = this.nbaService.getStatsFromGames(games, this.team))
+      ),
+      startWith([])
+    );
+  }
+
+  nbOfDaysChange(nbOfDays: number) {
+    this.nbOfDaysSubject.next(nbOfDays);
   }
 
   async removeTrackedTeam(team: Team) {

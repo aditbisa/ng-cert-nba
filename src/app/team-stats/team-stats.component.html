@@ -10,7 +10,13 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6">
-        <p>Results of past 12 days:</p>
+        <p>
+          Results of past
+          <app-number-days
+            (valueChange)="nbOfDaysChange($event)"
+          ></app-number-days>
+          days:
+        </p>
         <p>
           <mark
             class="tag"
@@ -20,10 +26,12 @@
           >
         </p>
         <p>
-          Avg pts scored: <strong>{{ stats.averagePointsScored }}</strong>
+          Avg pts scored:
+          <strong>{{ stats.averagePointsScored || "~" }}</strong>
         </p>
         <p>
-          Avg pts conceded: <strong>{{ stats.averagePointsConceded }}</strong>
+          Avg pts conceded:
+          <strong>{{ stats.averagePointsConceded || "~" }}</strong>
         </p>
       </div>
       <div class="col-sm-6">
