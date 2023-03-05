@@ -1,0 +1,33 @@
+<div class="modal-overlay" (click)="close($event)">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h1>{{ title }}</h1>
+    </div>
+
+    <div class="modal-content">
+      <p>{{ message }}</p>
+    </div>
+
+    <div class="modal-footer">
+      <ng-container [ngSwitch]="type">
+        <div *ngSwitchCase="'ConfirmCancel'" class="modal-confirm-cancel">
+          <button (click)="close()">Cancel</button>
+          <button class="primary" #primary (click)="response('confirm')">
+            Confirm
+          </button>
+        </div>
+
+        <div *ngSwitchCase="'YesNo'" class="modal-yes-no">
+          <button (click)="close()">No</button>
+          <button class="primary" #primary (click)="response('yes')">
+            Yes
+          </button>
+        </div>
+
+        <div *ngSwitchDefault class="modal-ok">
+          <button class="primary" #primary (click)="response('ok')">Ok</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
