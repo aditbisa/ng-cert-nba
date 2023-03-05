@@ -9,7 +9,7 @@ describe('ModalService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ModalComponent],
+      imports: [ModalComponent],
       providers: [ModalService],
     });
     service = TestBed.inject(ModalService);
