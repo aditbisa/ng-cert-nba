@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable, tap } from 'rxjs';
 
 import { Team } from '../data.models';
 import { NbaService } from '../nba.service';
