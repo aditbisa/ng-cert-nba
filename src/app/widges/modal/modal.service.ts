@@ -7,18 +7,22 @@ import { ModalComponent, ModalType } from './modal.component';
   providedIn: 'root',
 })
 export class ModalService {
+  private viewContainerRef!: ViewContainerRef;
   private componentRef!: ComponentRef<ModalComponent>;
   private modalSubject!: Subject<string>;
 
   constructor() {}
 
+  setContainer(viewContainerRef: ViewContainerRef) {
+    this.viewContainerRef = viewContainerRef;
+  }
+
   show(
-    viewContainerRef: ViewContainerRef,
     title: string,
     message: string,
     type: ModalType = 'Ok'
   ): Observable<string> {
-    this.componentRef = viewContainerRef.createComponent(ModalComponent);
+    this.componentRef = this.viewContainerRef.createComponent(ModalComponent);
 
     const modal = this.componentRef.instance;
     modal.title = title;
