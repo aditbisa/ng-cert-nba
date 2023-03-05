@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { Team, Stats } from '../data.models';
@@ -31,6 +33,7 @@ describe('TeamStatsComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [TeamStatsComponent],
+      imports: [FormsModule, RouterTestingModule.withRoutes([])],
       providers: [{ provide: NbaService, useValue: nbaServiceSpy }],
     }).compileComponents();
 
