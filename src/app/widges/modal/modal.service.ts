@@ -1,5 +1,5 @@
 import { ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 
 import { ModalComponent, ModalType } from './modal.component';
 
@@ -21,7 +21,7 @@ export class ModalService {
     title: string,
     message: string,
     type: ModalType = 'Ok'
-  ): Observable<string> {
+  ): Promise<string> {
     this.componentRef = this.viewContainerRef.createComponent(ModalComponent);
 
     const modal = this.componentRef.instance;
@@ -32,7 +32,7 @@ export class ModalService {
     modal.closeEvent.subscribe(this.close.bind(this));
 
     this.modalSubject = new Subject<string>();
-    return this.modalSubject.asObservable();
+    return firstValueFrom(this.modalSubject.asObservable());
   }
 
   private response(answer: string) {
