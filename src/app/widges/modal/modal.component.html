@@ -11,21 +11,21 @@
     <div class="modal-footer">
       <ng-container [ngSwitch]="type">
         <div *ngSwitchCase="'ConfirmCancel'" class="modal-confirm-cancel">
-          <button (click)="close()">Cancel</button>
-          <button class="primary" #primary (click)="response('confirm')">
+          <button (click)="response('Cancel')">Cancel</button>
+          <button class="primary" #primary (click)="response('Confirm')">
             Confirm
           </button>
         </div>
 
         <div *ngSwitchCase="'YesNo'" class="modal-yes-no">
-          <button (click)="close()">No</button>
-          <button class="primary" #primary (click)="response('yes')">
+          <button (click)="response('No')">No</button>
+          <button class="primary" #primary (click)="response('Yes')">
             Yes
           </button>
         </div>
 
         <div *ngSwitchDefault class="modal-ok">
-          <button class="primary" #primary (click)="response('ok')">Ok</button>
+          <button class="primary" #primary (click)="response('Ok')">Ok</button>
         </div>
       </ng-container>
     </div>
