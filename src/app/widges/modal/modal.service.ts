@@ -41,6 +41,7 @@ export class ModalService {
   }
 
   close() {
+    this.modalSubject.next('');
     this.modalSubject.complete();
     this.componentRef.destroy();
   }
